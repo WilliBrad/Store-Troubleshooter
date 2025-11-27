@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "store-troubleshooter-v2",
+    "name": "Store Troubleshooter",
     "slug": "store-troubleshooter-v2",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,7 +23,15 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "Store IT Troubleshooting",
+      "shortName": "Store IT",
+      "backgroundColor": "#ffffff",
+      "themeColor": "#000000",
+      "viewport": "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+    },
+    "experiments": {
+      "baseUrl": "/Store-Troubleshooter"
     }
   }
 }

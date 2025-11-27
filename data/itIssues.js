@@ -10,36 +10,35 @@ export const categories = [
         title: "POS Screen Frozen / Not Responding",
         isCommon: true,
         symptoms: [
-          "Touchscreen not responding",
+          "Order not cashing out",
           "Buttons lagging or stuck on one screen",
         ],
         steps: [
-          "Check if a guest is mid-order. If yes, finish or cancel it if possible before restarting.",
-          "Try closing the POS application if there is a way to safely exit.",
-          "If still frozen, restart the POS using your approved store procedure (no breaker flips).",
-          "After restart, log in and run a small test order to confirm it works.",
+          "Before a restart try to ring up a water and overring order",
+          "If still frozen, restart the POS using your approved store procedure (no breaker flips) and repeat step 1.",
+          "After restart, run a small test order to confirm it works.",
         ],
         escalation:
-          "If the POS does not load, shows repeated errors, or cannot connect after restart, move traffic to another POS if possible and contact the approved IT help desk.",
+          "If the POS does not load, shows repeated errors, or cannot connect after restart, move traffic to another POS if possible and contact Gage or AJ.",
         tags: ["front counter", "drive-thru", "pos"],
       },
       {
         id: "pos-offline",
-        title: "POS Showing 'Network Offline' / Red Network Icon",
+        title: "POS Showing 'Offline' or Red Network Icon",
         isCommon: true,
         symptoms: [
-          "POS cannot send orders",
-          "Card transactions failing",
-          "Red / offline indicator on screen",
+          "POS cannot send orders to kitchen",
+          "would you like to try again message",
+          "Offline indicator on screen",
         ],
         steps: [
-          "Check if other POS terminals are working.",
-          "If multiple stations show offline, treat it as a store network issue.",
-          "Confirm the POS network cable is firmly plugged in (if visible and allowed).",
-          "If only one terminal is affected, restart that POS using normal procedure.",
+          "Check if other POS devices are working.",
+          "If multiple POS devices show offline, treat it as a waystation issue and promote to backup.",
+          "Confirm the POS network cable is firmly plugged in (if visible and) usually a yellow cable.",
+          "If only one POS is affected, restart that POS using normal procedure.",
         ],
         escalation:
-          "If more than one POS is offline or issues persist, escalate to manager-level response and follow store network outage / IT help desk process.",
+          "If more than one POS is offline or issues persist, escalate to GM and call Gage or AJ.",
         tags: ["network", "pos"],
       },
     ],
@@ -58,13 +57,11 @@ export const categories = [
           "No response when buttons are pressed",
         ],
         steps: [
-          "Confirm the reader is seated correctly in its base/cradle (if wireless).",
-          "Check that the power or USB cable is firmly connected on both ends.",
-          "If connected to a POS, confirm that POS is powered on and responsive.",
-          "If allowed, test the reader on a known working cable/port.",
+          "Try holding the RED and GREEN buttons for 10 seconds to reboot the PED.",
+          "Check that the power or USB cable is firmly connected on both ends (Follow the black cable on the PED).",
         ],
         escalation:
-          "If the device still does not power on, use another terminal if available and contact your approved payment/IT support. Do not open the unit.",
+          "If the device still does not power on, Please call Gage or AJ.",
         tags: ["card", "payments", "peds"],
       },
       {
@@ -77,12 +74,11 @@ export const categories = [
         ],
         steps: [
           "Check if this happens on one register or multiple.",
-          "If only one, reseat cables and restart that POS using normal procedure.",
           "Confirm network is up (orders sending, other devices online).",
-          "Avoid running repeated test charges for the same guest.",
+          "Reboot the PED by holding RED and GREEN buttons it shoould power off, repeat the same to turn back on.",
         ],
         escalation:
-          "If the error affects multiple readers or continues after restart, follow the store payment outage procedure and contact the designated support line. Do not change network/router settings.",
+          "If the error affects multiple readers or continues after reboot, if only one reader move to another POS if possible. Do not attempt to change network/router settings. Call Gage or AJ.",
         tags: ["card", "network", "payments"],
       },
       {
@@ -98,7 +94,7 @@ export const categories = [
           "Note any recurring error text mentioning host/processor/comm error.",
         ],
         escalation:
-          "Treat as possible processor issue. Follow official payment outage steps & contact support. Do not modify terminal configuration unless instructed.",
+          "Treat as possible processor issue. Call Gage or AJ if it continues.",
         tags: ["card", "payments"],
       },
     ],

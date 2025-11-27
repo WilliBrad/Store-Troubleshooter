@@ -1,15 +1,15 @@
 // components/ScreenBackground.js
+
 import React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
 
 export default function ScreenBackground({ children }) {
   return (
     <ImageBackground
-      source={require("../assets/background.jpg")} // <- your fries image
+      source={require("../assets/background.jpg")} // change to .jpg if needed
       style={styles.bg}
       resizeMode="cover"
     >
-      {/* subtle overlay so text is readable */}
       <View style={styles.overlay}>{children}</View>
     </ImageBackground>
   );
@@ -18,10 +18,14 @@ export default function ScreenBackground({ children }) {
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
-    backgroundColor: "#000",
+    width: "100%",
+    height: "100%",
+    overflow: "hidden" // prevent any horizontal scroll bleed
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.18)", // tweak if you want lighter/darker
-  },
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.18)"
+  }
 });
