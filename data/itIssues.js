@@ -114,11 +114,12 @@ export const categories = [
         steps: [
           "Check that the kiosk has power (screen brightness / any lights).",
           "Confirm no update or maintenance message is displayed.",
-          "If allowed, restart the kiosk application or device per store process.",
-          "After restart, place a small test order to confirm it works.",
+          "Tap the bottom left corner of the screen and see if gives you the error message",
+          "If Possible please open the kiosk and reboot the KVS (Black Box typiclly in yellow cage)by unpluging the power cable and plug it back in.",
+          "After restart, place a small water test order to confirm it works.",
         ],
         escalation:
-          "If the kiosk repeatedly freezes or will not load, temporarily disable it and report via approved IT support channel.",
+          "If the kiosk repeatedly freezes or will not load, temporarily log it out and detatch (if closing time) and be sure to turn in a ticket.",
         tags: ["lobby", "kiosk"],
       },
       {
@@ -129,12 +130,12 @@ export const categories = [
           "No order appears on KVS / production screens",
         ],
         steps: [
-          "Confirm kiosk shows 'Order Complete' with a check/order number.",
+          "Confirm kiosk shows 'Order Complete' with a check/order number/ verify customer paid.",
           "Check if any kiosk orders are appearing or if none are.",
           "If all kiosk orders fail, turn kiosks off for guests and direct to front counter.",
         ],
         escalation:
-          "Escalate as a kiosk-to-KVS link issue. Follow IT/KVS support instructions.",
+          "Be sure to submit a ticket if the issue still remains.",
         tags: ["kiosk", "kvs"],
       },
     ],
@@ -153,13 +154,13 @@ export const categories = [
           "Printer is silent or has no lights",
         ],
         steps: [
-          "Check printer power and ensure it is turned on.",
+          "Check printer power cable (large black cable runs to power brick or wall) and ensure it is turned on.",
           "Open the cover and confirm a paper roll is loaded correctly.",
-          "Check visible cables between printer and POS (if allowed).",
-          "Confirm the correct printer is selected in POS settings (if accessible).",
+          "Check printer cable connections (USB at POS and verify its plugged into printer).",
+          "Confirm the correct printer is selected in POS settings (Manager->support->set default printer).",
         ],
         escalation:
-          "If still not printing, use a backup station if available and contact IT. Avoid random cable swaps.",
+          "If still not printing, use a backup station if available and submit a ticket.",
         tags: ["pos", "printer"],
       },
       {
@@ -171,10 +172,10 @@ export const categories = [
         steps: [
           "Confirm kitchen printer has power and paper.",
           "Clear any paper jams and reload paper.",
-          "Check if any orders print at all. If none, use KVS screens as backup.",
+          "Check if any orders print at all.",
         ],
         escalation:
-          "Escalate as a routing/KVS or printer issue via approved support. Do not rewire equipment without training.",
+          "Do not rewire equipment without training. If still not printing please submit a ticket with printer location BFAST or LUNCH side 1 or 2",
         tags: ["kitchen", "printer", "kvs"],
       },
     ],
@@ -194,12 +195,13 @@ export const categories = [
         ],
         steps: [
           "Confirm headset is powered on and charged.",
-          "Check volume on headset and base station.",
-          "Test with another headset to see if it's device vs system.",
+          "Check volume on headset.",
+          "Test with another headset to see if it's device or system.",
           "Verify correct lane selection if multi-lane.",
+          "Lastly reboot the Baystation (black HME box or Beige/Brown box with number pad)",
         ],
         escalation:
-          "If all headsets fail, treat as system issue and contact drive-thru/IT support.",
+          "If all headsets fail, treat as system issue and contact Gage or AJ.",
         tags: ["drive-thru", "audio"],
       },
       {
@@ -210,10 +212,9 @@ export const categories = [
         ],
         steps: [
           "Check if a vehicle is parked on the loop/sensor.",
-          "Use any documented reset/clear option on the base if trained.",
         ],
         escalation:
-          "If alarms will not clear, escalate. Do not randomly unplug components.",
+          "If alarms will not clear, please submit a ticket.",
         tags: ["drive-thru"],
       },
     ],
@@ -234,10 +235,9 @@ export const categories = [
         steps: [
           "Confirm if outage affects multiple systems (POS, kiosks, KVS, headsets).",
           "Visually verify networking gear has power (no unplugging unless documented).",
-          "If backup/4G/failover is available by policy, follow that documented process.",
         ],
         escalation:
-          "Immediately escalate as a store-wide issue via official IT/contact list. No unauthorized cable or config changes.",
+          "Immediately escalate as a store-wide issue by contacting Gage or AJ. No unauthorized cable or config changes.",
         tags: ["network", "store-wide"],
       },
     ],
@@ -257,11 +257,10 @@ export const categories = [
         steps: [
           "Confirm monitor power cable is secure and outlet is working.",
           "Verify video cable is connected on both monitor and device.",
-          "Toggle monitor power button.",
-          "If allowed, test with another known good cable/port.",
+          "Turn off and on monitor power button.",
         ],
         escalation:
-          "If still no display, report and do not open the monitor casing.",
+          "If still no display, report to Gage or AJ.",
         tags: ["monitors", "display", "hardware"],
       },
       {
@@ -276,7 +275,7 @@ export const categories = [
           "Confirm correct cable is plugged in.",
         ],
         escalation:
-          "If correct input never shows, contact IT before moving cables.",
+          "If correct input never shows, contact Gage or AJ before moving cables.",
         tags: ["monitors", "display"],
       },
     ],
@@ -295,12 +294,12 @@ export const categories = [
         ],
         steps: [
           "Check if one screen or all are affected.",
-          "If one, reboot that station/controller per procedure.",
+          "If one, reboot that station/controller per procedure unplug and plug back in power cable.",
           "If all are frozen, confirm network & power to KVS equipment.",
           "Confirm POS is still sending orders.",
         ],
         escalation:
-          "If screens stay frozen after restart, escalate as KVS/network issue via IT. Do not reset switches unless trained.",
+          "If screens stay frozen after restart, escalate and call Gage or AJ.",
         tags: ["kvs", "kitchen", "controller"],
       },
       {
@@ -313,10 +312,10 @@ export const categories = [
         steps: [
           "Check that controller has power and indicator lights.",
           "Ensure Ethernet is firmly connected both ends.",
-          "If trained, perform a soft restart of the controller.",
+          "Reboot the controller.",
         ],
         escalation:
-          "If still offline, escalate for replacement or further guidance.",
+          "If still offline, please call Gage or AJ.",
         tags: ["kvs", "network", "kitchen"],
       },
     ],
