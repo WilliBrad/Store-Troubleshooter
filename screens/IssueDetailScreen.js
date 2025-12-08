@@ -1,32 +1,44 @@
 // screens/IssueDetailScreen.js
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Text,
   StyleSheet,
   View,
   FlatList,
   ScrollView,
+  Modal,
+  TouchableOpacity,
+  Linking,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { categories } from "../data/itIssues";
 import ScreenBackground from "../components/ScreenBackground";
 import PressableScale from "../components/PressableScale";
-import { ArrowLeft, AlertTriangle } from "lucide-react-native";
+import { ArrowLeft, AlertTriangle, Phone } from "lucide-react-native";
 
 export default function IssueDetailScreen({ route, navigation }) {
   const { categoryId, issueId, issueTitle } = route.params || {};
+  const [showModal, setShowModal] = useState(false);
+
+  // Categories that should show the OTP contact button
+  const otpEnabled = ["pos", "card", "network", "monitors", "kvs"];
 
   const issue = useMemo(() => {
     const category = categories.find((c) => c.id === categoryId);
     return category?.issues?.find((i) => i.id === issueId);
   }, [categoryId, issueId]);
 
+  const callNumber = (num) => {
+    Linking.openURL(`tel:${num}`);
+    setShowModal(false);
+  };
+
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safe} edges={["top", "left", "right"]}>
         <View style={styles.container}>
-          {/* Back + Title */}
+          {/* Back & Title */}
           <View style={styles.headerRow}>
             <PressableScale
               style={styles.backButton}
@@ -51,18 +63,13 @@ export default function IssueDetailScreen({ route, navigation }) {
           {!issue ? (
             <Text style={styles.empty}>Issue details not found.</Text>
           ) : (
-            <ScrollView
-              style={styles.scroll}
-              contentContainerStyle={styles.scrollContent}
-            >
+            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
               {/* Symptoms */}
               {issue.symptoms?.length > 0 && (
                 <View style={styles.block}>
                   <Text style={styles.blockLabel}>You might see:</Text>
                   {issue.symptoms.map((s, idx) => (
-                    <Text key={idx} style={styles.bulletText}>
-                      • {s}
-                    </Text>
+                    <Text key={idx} style={styles.bulletText}>• {s}</Text>
                   ))}
                 </View>
               )}
@@ -78,9 +85,7 @@ export default function IssueDetailScreen({ route, navigation }) {
                     renderItem={({ item, index }) => (
                       <View style={styles.stepRow}>
                         <View style={styles.stepBadge}>
-                          <Text style={styles.stepBadgeText}>
-                            {index + 1}
-                          </Text>
+                          <Text style={styles.stepBadgeText}>{index + 1}</Text>
                         </View>
                         <Text style={styles.stepText}>{item}</Text>
                       </View>
@@ -96,23 +101,62 @@ export default function IssueDetailScreen({ route, navigation }) {
                     <AlertTriangle size={15} color="#ffcc66" />
                     <Text style={styles.blockLabel}>When to escalate:</Text>
                   </View>
-                  <Text style={styles.escalationText}>
-                    {issue.escalation}
-                  </Text>
+                  <Text style={styles.escalationText}>{issue.escalation}</Text>
                 </View>
+              )}
+
+              {/* Contact OTP Button (only for selected categories) */}
+              {otpEnabled.includes(categoryId) && (
+                <TouchableOpacity
+                  style={styles.otpButton}
+                  onPress={() => setShowModal(true)}
+                >
+                  <Phone size={16} color="#000" style={{ marginRight: 6 }} />
+                  <Text style={styles.otpButtonText}>Contact OTP</Text>
+                </TouchableOpacity>
               )}
             </ScrollView>
           )}
         </View>
       </SafeAreaView>
+
+      {/* OTP Modal */}
+      <Modal transparent visible={showModal} animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalBox}>
+            <Text style={styles.modalTitle}>Select Contact</Text>
+
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => callNumber("2569601032")}
+            >
+              <Text style={styles.modalButtonText}>East – Gage Bradshaw</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => callNumber("2565800642")}
+            >
+              <Text style={styles.modalButtonText}>West – AJ Crisler</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.modalButton, { backgroundColor: "#ccc" }]}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={[styles.modalButtonText, { color: "#000" }]}>
+                Cancel
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScreenBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-  },
+  safe: { flex: 1 },
   container: {
     flex: 1,
     paddingHorizontal: 12,
@@ -135,12 +179,10 @@ const styles = StyleSheet.create({
   },
   backIconWrap: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
-  headerTextWrap: {
-    flexShrink: 1,
-  },
+  headerTextWrap: { flexShrink: 1 },
   heading: {
     color: "#fff",
     fontSize: 18,
@@ -151,12 +193,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 2,
   },
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 18,
-  },
+  scroll: { flex: 1 },
+  scrollContent: { paddingBottom: 28 },
   block: {
     padding: 10,
     backgroundColor: "rgba(8,8,8,0.92)",
@@ -178,29 +216,24 @@ const styles = StyleSheet.create({
   },
   stepRow: {
     flexDirection: "row",
-    alignItems: "flex-start",
     marginBottom: 4,
   },
   stepBadge: {
     width: 18,
     height: 18,
-    borderRadius: 9,
     backgroundColor: "#ffcc66",
-    alignItems: "center",
+    borderRadius: 9,
     justifyContent: "center",
+    alignItems: "center",
     marginRight: 6,
     marginTop: 2,
   },
   stepBadgeText: {
+    color: "#000",
     fontSize: 10,
     fontWeight: "800",
-    color: "#000",
   },
-  stepText: {
-    flex: 1,
-    color: "#fff",
-    fontSize: 12,
-  },
+  stepText: { color: "#fff", fontSize: 12, flex: 1 },
   escalationHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -211,10 +244,54 @@ const styles = StyleSheet.create({
     color: "#f6e3b4",
     fontSize: 12,
   },
-  empty: {
-    color: "#ddd",
-    fontSize: 12,
-    marginTop: 20,
+
+  /** OTP BUTTON */
+  otpButton: {
+    backgroundColor: "#ffcc66",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 40,
+  },
+  otpButtonText: {
+    fontWeight: "700",
+    fontSize: 14,
+    color: "#000",
+  },
+
+  /** MODAL */
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.55)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalBox: {
+    width: "80%",
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: "800",
+    marginBottom: 12,
+    color: "#000",
     textAlign: "center",
+  },
+  modalButton: {
+    backgroundColor: "#ffcc66",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  modalButtonText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "700",
   },
 });
